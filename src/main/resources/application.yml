@@ -20,6 +20,14 @@ spring:
   profiles:
     active: dev
 
+  web:
+    resources:
+      add-mappings: false
+
+  threads:
+    virtual:
+      enabled: true
+
   application:
     name: logi-track
     max-retries-events-failed: 3

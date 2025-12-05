@@ -3,8 +3,6 @@ package co.com.quind.logitrack.domain.model;
 import co.com.quind.logitrack.domain.exception.DataRequiredException;
 import lombok.*;
 
-import java.time.ZonedDateTime;
-
 @Getter
 @Setter
 @ToString
@@ -18,7 +16,6 @@ public class DeliveryAddress {
     private String departmentName;
     private String address;
     private String neighborhood;
-    private ZonedDateTime eventDate;
 
     public void validateRequiredData() {
         if (name == null) {
