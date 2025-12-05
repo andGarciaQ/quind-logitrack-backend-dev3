@@ -1,0 +1,116 @@
+info:
+  component: logi-track
+
+server:
+  port: 8181
+  servlet:
+    context-path: /logi-track
+
+scheduler:
+  mastercardClaims:
+    fixed-delay-ms: 60000
+    lockAtMostFor: PT2M
+    lockAtLeastFor: PT1M
+  retryEventsFailed:
+    fixed-delay-ms: 60000
+    lockAtMostFor: PT1M
+    lockAtLeastFor: PT1M
+
+spring:
+  profiles:
+    active: dev
+
+  application:
+    name: logi-track
+    max-retries-events-failed: 3
+
+  task:
+    scheduling:
+      shutdown:
+        await-termination: true
+        await-termination-period: 30s
+
+  datasource:
+    hikari:
+      connection-timeout: 5000
+    url: jdbc:postgresql://localhost:5432/logi_track_db
+    username: admin
+    password: admin123
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/logi_track_db
+    user: admin
+    password: admin123
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      jdbc:
+        time_zone: UTC
+
+
+  kafka:
+    bootstrap-servers: localhost:9093
+    listener:
+      concurrency: 3
+      ack-mode: record
+      admin:
+        auto-create: true
+
+    producer:
+      acks: all
+      properties:
+        enable.idempotence: true
+        delivery.timeout.ms: 10000 # Tiempo máximo total de envío (10s)
+        request.timeout.ms: 5000   # Espera por respuesta del broker (5s)
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+      topics:
+
+    consumer:
+      group-id: ${group_id}
+      auto-offset-reset: latest
+
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+      topics:
+
+        retry:
+          attempts: 4
+          timeoutMilliseconds: 135000
+          retryTopicSuffix: -logi-track-retry
+          dltTopicSuffix: -logi-track-dlt
+          backoff:
+            delayMilliseconds: 5000
+            multiplier: 3
+
+logging:
+  level:
+    root: info
+    co.com.quind: info
+    org.springframework: info
+    org.hibernate: info
+    liquibase: info
+    org.apache.kafka: warn
+  pattern:
+    correlation: "[trace-id=%X{trace-id}]"
+  logback:
+    rollingpolicy:
+      max-file-size: 1GB
+      max-history: 3
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: loggers, health, info, metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
