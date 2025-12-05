@@ -1,8 +1,8 @@
 package co.com.quind.logitrack.infrastructure.entrypoints.apirest.dto.request;
 
-public record FullAddressRequest(
+public record AddressRequest(
         String name,
         String cityName,
-        String departmentName,
+        String countryName,
         String address,
         String neighborhood) { }

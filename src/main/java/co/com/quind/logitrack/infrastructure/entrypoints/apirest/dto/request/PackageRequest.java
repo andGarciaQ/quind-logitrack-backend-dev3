@@ -7,7 +7,7 @@ public record PackageRequest(
 
         @NotNull(message = "Full Address is required")
         @Valid
-        FullAddressRequest address,
+        AddressRequest address,
 
         @NotNull(message = "Dimensions are required")
         DimensionRequest dimensions

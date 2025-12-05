@@ -29,7 +29,7 @@ public class PackageEntity {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "delivery_address", columnDefinition = "jsonb")
-    private DeliveryAddress deliveryAddress;
+    private DeliveryAddress address;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "dimensions", nullable = false, columnDefinition = "jsonb")

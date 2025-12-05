@@ -1,6 +1,6 @@
 package co.com.quind.logitrack.infrastructure.entrypoints.apirest.controller;
 
-import co.com.quind.logitrack.domain.model.Package;
+import co.com.quind.logitrack.domain.model.ports.inbound.PackageHandler;
 import co.com.quind.logitrack.infrastructure.entrypoints.apirest.dto.request.PackageRequest;
 import co.com.quind.logitrack.infrastructure.entrypoints.apirest.dto.response.PackageResponse;
 import co.com.quind.logitrack.infrastructure.entrypoints.apirest.logging.Logging;
@@ -19,14 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PackageController {
 
-    //private final PackageHandler packageHandler;
+    private final PackageHandler packageHandler;
     private final PackageRestMapper packageMapper;
 
     @Logging
     @PostMapping
     public ResponseEntity<PackageResponse> createPackage(@Valid @RequestBody PackageRequest request) {
-        final Package createdPackage = packageMapper.toModel(request);
-
+        final var createdPackage = packageHandler.createPackage(packageMapper.toModel(request));
         return new ResponseEntity<>(packageMapper.toResponse(createdPackage), HttpStatus.CREATED);
     }
 

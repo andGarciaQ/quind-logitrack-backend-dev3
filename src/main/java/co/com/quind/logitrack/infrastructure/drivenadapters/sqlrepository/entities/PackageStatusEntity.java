@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.OffsetDateTime;
 
 @Setter
 @Getter
@@ -26,7 +26,7 @@ public class PackageStatusEntity {
     private PackageState status;
 
     @Column(nullable = false)
-    private Instant timestamp;
+    private OffsetDateTime timestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id", nullable = false)

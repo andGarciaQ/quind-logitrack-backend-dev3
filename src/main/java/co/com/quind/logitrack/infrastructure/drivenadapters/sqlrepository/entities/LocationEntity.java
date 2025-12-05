@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Setter
 @Getter
@@ -25,7 +25,7 @@ public class LocationEntity {
     private String country;
 
     @Column(nullable = false)
-    private LocalDateTime timestamp;
+    private OffsetDateTime timestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id", nullable = false)

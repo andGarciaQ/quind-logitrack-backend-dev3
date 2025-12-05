@@ -13,7 +13,7 @@ public class DeliveryAddress {
 
     private String name;
     private String cityName;
-    private String departmentName;
+    private String countryName;
     private String address;
     private String neighborhood;
 
@@ -24,8 +24,8 @@ public class DeliveryAddress {
         if (cityName == null || cityName.isBlank()) {
             throw new DataRequiredException("cityName");
         }
-        if (departmentName == null || departmentName.isBlank()) {
-            throw new DataRequiredException("departmentName");
+        if (countryName == null || countryName.isBlank()) {
+            throw new DataRequiredException("countryName");
         }
         if (address == null || address.isBlank()) {
             throw new DataRequiredException("address");
