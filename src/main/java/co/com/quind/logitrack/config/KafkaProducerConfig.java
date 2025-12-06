@@ -1,4 +1,4 @@
-package co.com.quind.logitrack.infrastructure.drivenadapters.kafkaproducer.config;
+package co.com.quind.logitrack.config;
 
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
